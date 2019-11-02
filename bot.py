@@ -6,6 +6,8 @@
 import socket
 import os
 import requests
+import re
+import metadata_parser
 
 SERVER = "irc.rizon.net"
 CHANNELS = ["#crimbot", "#crimson"]
@@ -56,6 +58,16 @@ def lastfm(user):
             sendmsg(f"{user} is currently playing: {track} by {artist}")
     except KeyError:
         sendmsg(f"you are not playing anything")
+
+
+def findurls(message):
+    # findall() has been used  
+    urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', messsage) 
+    for u in urls:
+        page = metadata_parser.MetadataParser(url=u, search_head_only=False)
+        title = page.get_metadatas('title', strategy=['og'])
+        if title:
+            sendmsg(f"{u}: {title}")
 
 
 if __name__ == "__main__":
