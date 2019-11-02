@@ -60,8 +60,9 @@ def lastfm(user):
         sendmsg(f"you are not playing anything")
 
 
+
 def findurls(message):
-    urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
+    urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
     return urls
 
 
@@ -102,12 +103,11 @@ if __name__ == "__main__":
                 if message[:3].find(".np") != -1:
                     lastfm(username)
                 urls = findurls(ircmsg)
-                if urls:
-                    for u in urls:
-                        page = metadata_parser.MetadataParser(url=u, search_head_only=False)
-                        title = "".join(page.get_metadatas('title', strategy=['og']))
-                        if title:
-                            sendmsg(f"{u}: {title}")
+                for u in urls:
+                    page = metadata_parser.MetadataParser(url=u, search_head_only=False)
+                    title = "".join(page.get_metadatas('title', strategy=['og']))
+                    if title:
+                        sendmsg(f"{u}: {title}")
 
     except KeyboardInterrupt:
         sendmsg("kthx bye")
