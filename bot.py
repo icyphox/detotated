@@ -10,7 +10,6 @@ import re
 
 from bs4 import BeautifulSoup
 from plugins.colors import *
-from plugins.lastfm import *
 
 SERVER = "irc.rizon.net"
 CHANNELS = ["#crimbot", "#crimson"]
@@ -40,7 +39,6 @@ def send_user():
 def joinchan():
     for c in CHANNELS:
         irc.send(b(f"JOIN {c}\n"))
-    sendmsg(color("how much detotated wam do you need for a server?", "blue"))
 
 
 def sendmsg(msg, target="#crimson"):
@@ -48,7 +46,10 @@ def sendmsg(msg, target="#crimson"):
 
 
 def findurls(message):
-    urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
+    urls = re.findall(
+        "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+",
+        message,
+    )
     return urls
 
 
@@ -59,11 +60,33 @@ def urltitle(url):
     sendmsg(color("» ", "purple") + color(f"{title}", "reset"))
 
 
+def lastfm(user):
+    API_KEY = "767dc7e260f5facfe2a6f39496983d5b"
+    USER = user
+    URL = f"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user={USER}&api_key={API_KEY}&format=json&limit=1&nowplaying=true"
+    r = requests.get(URL)
+    data = r.json()
+    print(data)
+    try:
+        if data["recenttracks"]["track"][0]["@attr"]["nowplaying"] == "true":
+            track = data["recenttracks"]["track"][0]["name"]
+            artist = data["recenttracks"]["track"][0]["artist"]["#text"]
+            sendmsg(
+                color("» ", "purple")
+                + color(f"{track}", "white")
+                + color("by", "reset")
+                + color(f"{artist}", "white")
+            )
+    except KeyError:
+        sendmsg(color("» ", "purple") + "there's nothing playing")
+
+
 def eval_msg(message):
     try:
         sendmsg(eval(message))
     except:
         sendmsg(color("learnpython.org bro", "orange"))
+
 
 if __name__ == "__main__":
     try:
@@ -100,7 +123,7 @@ if __name__ == "__main__":
                 if message.find(f"{NICK}") != -1:
                     sendmsg(f"sup mah nigatoni {username}!")
                 if message[:3].find(".np") != -1:
-                    np(username)
+                    lastfm(username)
                 if message[:5].find(".eval") != -1:
                     eval_msg(message[6:])
                 urls = findurls(ircmsg)
