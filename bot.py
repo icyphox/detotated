@@ -37,7 +37,7 @@ def send_user():
 def joinchan():
     for c in CHANNELS:
         irc.send(b(f"JOIN {c}\n"))
-    sendmsg("how much detotated wam do you need for a server?")
+    sendmsg("\x02how much detotated wam do you need for a server?")
 
 
 def sendmsg(msg, target="#crimson"):
