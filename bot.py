@@ -8,7 +8,7 @@ import os
 import requests
 import re
 import metadata_parser
-import plugins.colors
+from plugins.colors import *
 
 SERVER = "irc.rizon.net"
 CHANNELS = ["#crimbot", "#crimson"]
