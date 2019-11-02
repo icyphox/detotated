@@ -7,8 +7,10 @@ import socket
 import os
 import requests
 import re
-from plugins.colors import *
+
 from bs4 import BeautifulSoup
+from plugins.colors import *
+import plugins.lastfm
 
 SERVER = "irc.rizon.net"
 CHANNELS = ["#crimbot", "#crimson"]
@@ -43,22 +45,6 @@ def joinchan():
 
 def sendmsg(msg, target="#crimson"):
     irc.send(b(f"PRIVMSG {target} :{msg}\n"))
-
-
-def lastfm(user):
-    API_KEY = "767dc7e260f5facfe2a6f39496983d5b"
-    USER = user
-    URL = f"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user={USER}&api_key={API_KEY}&format=json&limit=1&nowplaying=true"
-    r = requests.get(URL)
-    data = r.json()
-    print(data)
-    try:
-        if data["recenttracks"]["track"][0]["@attr"]["nowplaying"] == "true":
-            track = data["recenttracks"]["track"][0]["name"]
-            artist = data["recenttracks"]["track"][0]["artist"]["#text"]
-            sendmsg(f"{user} is currently playing: {color(track, 'green')} by {color(artist, 'teal')}")
-    except KeyError:
-        sendmsg(color("smh there's nothing playing", "red"))
 
 
 def findurls(message):
@@ -114,7 +100,7 @@ if __name__ == "__main__":
                 if message.find(f"{NICK}") != -1:
                     sendmsg(f"sup mah nigatoni {username}!")
                 if message[:3].find(".np") != -1:
-                    lastfm(username)
+                    plugins.lastfm(username)
                 if message[:5].find(".eval") != -1:
                     eval_msg(message[6:])
                 urls = findurls(ircmsg)
