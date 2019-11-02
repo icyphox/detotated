@@ -61,7 +61,7 @@ def lastfm(user):
 
 
 def findurls(message):
-    urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', messsage) 
+    urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
     for u in urls:
         page = metadata_parser.MetadataParser(url=u, search_head_only=False)
         title = page.get_metadatas('title', strategy=['og'])
