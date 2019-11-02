@@ -38,7 +38,7 @@ def send_user():
 def joinchan():
     for c in CHANNELS:
         irc.send(b(f"JOIN {c}\n"))
-    sendmsg(bold("how much detotated wam do you need for a server?"))
+    sendmsg(color("how much detotated wam do you need for a server?", "blue"))
 
 
 def sendmsg(msg, target="#crimson"):

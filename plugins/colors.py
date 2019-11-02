@@ -19,7 +19,7 @@ colors = {
 }
 
 def color(msg, c):
-    return f"\0x3{colors[c]}{msg}"
+    return f"\x03{colors[c]}{msg}"
 
 def bold(msg):
     return f"\x02{msg}"
