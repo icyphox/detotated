@@ -8,6 +8,7 @@ import os
 import requests
 import re
 import metadata_parser
+import plugins.colors
 
 SERVER = "irc.rizon.net"
 CHANNELS = ["#crimbot", "#crimson"]
@@ -37,7 +38,7 @@ def send_user():
 def joinchan():
     for c in CHANNELS:
         irc.send(b(f"JOIN {c}\n"))
-    sendmsg("\x02how much detotated wam do you need for a server?")
+    sendmsg(bold("how much detotated wam do you need for a server?"))
 
 
 def sendmsg(msg, target="#crimson"):
