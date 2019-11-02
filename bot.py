@@ -7,8 +7,8 @@ import socket
 import os
 import requests
 import re
-import metadata_parser
 from plugins.colors import *
+from bs4 import BeautifulSoup
 
 SERVER = "irc.rizon.net"
 CHANNELS = ["#crimbot", "#crimson"]
@@ -56,10 +56,9 @@ def lastfm(user):
         if data["recenttracks"]["track"][0]["@attr"]["nowplaying"] == "true":
             track = data["recenttracks"]["track"][0]["name"]
             artist = data["recenttracks"]["track"][0]["artist"]["#text"]
-            sendmsg(f"{user} is currently playing: {track} by {artist}")
+            sendmsg(f"{user} is currently playing: {color(track, 'green')} by {color(artist, 'teal')}")
     except KeyError:
-        sendmsg(f"you are not playing anything")
-
+        sendmsg(color("smh there's nothing playing", "red"))
 
 
 def findurls(message):
@@ -67,11 +66,18 @@ def findurls(message):
     return urls
 
 
+def urltitle(url):
+    res = requests.get(url)
+    soup = BeautifulSoup(res.text)
+    title = soup.title.string.strip()
+    sendmsg(color("» ", "purple") + color("{title}", "reset"))
+
+
 def eval_msg(message):
     try:
         sendmsg(eval(message))
     except:
-        sendmsg("learnpython.org bro")
+        sendmsg(color("learnpython.org bro", "orange"))
 
 if __name__ == "__main__":
     try:
@@ -113,10 +119,7 @@ if __name__ == "__main__":
                     eval_msg(message[6:])
                 urls = findurls(ircmsg)
                 for u in urls:
-                    page = metadata_parser.MetadataParser(url=u, search_head_only=False)
-                    title = "".join(page.get_metadatas('title', strategy=['og']))
-                    if title:
-                        sendmsg(f"{u}: {title}")
+                    urltitle(u)
 
     except KeyboardInterrupt:
         sendmsg("kthx bye")
