@@ -102,11 +102,12 @@ if __name__ == "__main__":
                 if message[:3].find(".np") != -1:
                     lastfm(username)
                 urls = findurls(ircmsg)
-                for u in urls:
-                    page = metadata_parser.MetadataParser(url=u, search_head_only=False)
-                    title = page.get_metadatas('title', strategy=['og'])
-                    if title:
-                        sendmsg(f"{u}: {title}")
+                if urls:
+                    for u in urls:
+                        page = metadata_parser.MetadataParser(url=u, search_head_only=False)
+                        title = "".join(page.get_metadatas('title', strategy=['og']))
+                        if title:
+                            sendmsg(f"{u}: {title}")
 
     except KeyboardInterrupt:
         sendmsg("kthx bye")
