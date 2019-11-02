@@ -67,8 +67,10 @@ def findurls(message):
 
 
 def eval_msg(message):
-    sendmsg(eval(message))
-
+    try:
+        sendmsg(eval(message))
+    except:
+        sendmsg("learnpython.org bro")
 
 if __name__ == "__main__":
     try:
