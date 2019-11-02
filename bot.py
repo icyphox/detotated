@@ -73,12 +73,12 @@ def lastfm(user):
             artist = data["recenttracks"]["track"][0]["artist"]["#text"]
             sendmsg(
                 color("» ", "purple")
-                + color(f"{track}", "white")
-                + color("by", "reset")
-                + color(f"{artist}", "white")
+                + color(f"{track} ", "white")
+                + color("by ", "reset")
+                + color(f"{artist} ", "white")
             )
     except KeyError:
-        sendmsg(color("» ", "purple") + "there's nothing playing")
+        sendmsg(color("» ", "purple") + color("there's nothing playing", "reset"))
 
 
 def eval_msg(message):
