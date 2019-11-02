@@ -10,7 +10,7 @@ import re
 
 from bs4 import BeautifulSoup
 from plugins.colors import *
-import plugins.lastfm
+from plugins.lastfm import *
 
 SERVER = "irc.rizon.net"
 CHANNELS = ["#crimbot", "#crimson"]
@@ -100,7 +100,7 @@ if __name__ == "__main__":
                 if message.find(f"{NICK}") != -1:
                     sendmsg(f"sup mah nigatoni {username}!")
                 if message[:3].find(".np") != -1:
-                    plugins.lastfm(username)
+                    np(username)
                 if message[:5].find(".eval") != -1:
                     eval_msg(message[6:])
                 urls = findurls(ircmsg)

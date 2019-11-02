@@ -1,4 +1,4 @@
-def lastfm(user):
+def np(user):
     API_KEY = "767dc7e260f5facfe2a6f39496983d5b"
     USER = user
     URL = f"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user={USER}&api_key={API_KEY}&format=json&limit=1&nowplaying=true"
