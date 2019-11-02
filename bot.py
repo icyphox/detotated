@@ -70,7 +70,7 @@ def urltitle(url):
     res = requests.get(url)
     soup = BeautifulSoup(res.text)
     title = soup.title.string.strip()
-    sendmsg(color("» ", "purple") + color("{title}", "reset"))
+    sendmsg(color("» ", "purple") + color(f"{title}", "reset"))
 
 
 def eval_msg(message):
