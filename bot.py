@@ -101,7 +101,7 @@ if __name__ == "__main__":
                     sendmsg(f"sup mah nigatoni {username}!")
                 if message[:3].find(".np") != -1:
                     lastfm(username)
-                let urls = findurls(ircmsg)
+                urls = findurls(ircmsg)
                 for u in urls:
                     page = metadata_parser.MetadataParser(url=u, search_head_only=False)
                     title = page.get_metadatas('title', strategy=['og'])
