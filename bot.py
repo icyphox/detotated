@@ -81,13 +81,6 @@ def lastfm(user):
         sendmsg(color("» ", "purple") + color("there's nothing playing", "reset"))
 
 
-def eval_msg(message):
-    try:
-        sendmsg(eval(message))
-    except:
-        sendmsg(color("learnpython.org bro", "orange"))
-
-
 if __name__ == "__main__":
     try:
         while True:
