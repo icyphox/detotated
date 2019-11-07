@@ -55,9 +55,10 @@ def findurls(message):
 
 def urltitle(url):
     res = requests.get(url)
-    soup = BeautifulSoup(res.text)
-    title = soup.title.string.strip()
-    sendmsg(color("» ", "purple") + color(f"{title}", "reset"))
+    if res.status_code >= 200 and res.status_code < 400:
+        soup = BeautifulSoup(res.text)
+        title = soup.title.string.strip()
+        sendmsg(color("» ", "purple") + color(f"{title}", "reset"))
 
 
 def lastfm(user):
