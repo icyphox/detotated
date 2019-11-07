@@ -55,10 +55,12 @@ def findurls(message):
 
 def urltitle(url):
     res = requests.get(url)
-    if res.status_code >= 200 and res.status_code < 400:
+    try:
         soup = BeautifulSoup(res.text)
         title = soup.title.string.strip()
         sendmsg(color("» ", "purple") + color(f"{title}", "reset"))
+    except ConnectionError:
+        sendmsg(color("» ", "purple") + color("connection error!", "red"))
 
 
 def lastfm(user):
