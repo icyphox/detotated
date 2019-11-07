@@ -59,8 +59,8 @@ def urltitle(url):
         soup = BeautifulSoup(res.text)
         title = soup.title.string.strip()
         sendmsg(color("» ", "purple") + color(f"{title}", "reset"))
-    except ConnectionError:
-        sendmsg(color("» ", "purple") + color("connection error!", "red"))
+    except requests.exceptions.RequestException:
+        sendmsg(color("» ", "purple") + color("some error occured; it's your url not me", "red"))
 
 
 def lastfm(user):
