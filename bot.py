@@ -60,7 +60,7 @@ def urltitle(url):
         title = soup.title.string.strip()
         sendmsg(color("» ", "purple") + color(f"{title}", "reset"))
     except requests.exceptions.RequestException:
-        sendmsg(color("» ", "purple") + color("nigga that url"))
+        sendmsg(color("» ", "purple") + color("nigga that url", "reset"))
 
 
 def lastfm(user):
