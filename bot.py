@@ -120,8 +120,6 @@ if __name__ == "__main__":
                     sendmsg(f"sup mah nigatoni {username}!")
                 if message[:3].find(".np") != -1:
                     lastfm(username)
-                if message[:5].find(".eval") != -1:
-                    eval_msg(message[6:])
                 urls = findurls(ircmsg)
                 for u in urls:
                     urltitle(u)
