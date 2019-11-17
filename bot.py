@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup
 from plugins.colors import *
 
 SERVER = "irc.rizon.net"
-CHANNELS = ["#crimbot", "#crimson"]
+CHANNELS = ["#crimson"]
 NICK = "detotated"
 PASSWORD = os.environ.get("DETOTATED_PW")
 SENT_NICK = False
